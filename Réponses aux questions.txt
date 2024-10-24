@@ -1,0 +1,40 @@
+------Prise en main ---------
+
+1- Cette topologie s'appelle client-serveur
+2- Dans les logs tout le monde voit les messages de tous 
+3- Il n'y a aucunes confidentialité et un intrus peut facilement y accéder
+4- Mettre un identifiant et un mot de passe lorsqu'on se connecte pour éviter les intrusions. 
+
+----Partie 1------------------
+
+1-Oui car urandom génère des valeurs aléatoires difficiles à prédire, il se base sur des évenements comme le bruit
+matériel du système
+2-Leur utilisation est dangereuse car une mauvaise utilisation ou application peut considérablement affaiblir le code,
+par exemple une réutilisation de l'IV
+3-Il peut nuire car même si les données sont chiffrées il peut avoir accès à non chiffrées pouvant servir pour des attaques.
+De plus, il se peut qu'il puisse récuperer la clé ou intercepter les messages avant chiffrement.
+Enfin même avec un chiffrement, un serveur peut avoir des logiciels malveillants compromettants.
+4-Il manque ici l'authentificaton des messages, en effet chiffrer les messages assure la confidentialité mais rien ne nous
+dit qu'ils n'ont pas été modifiés.
+
+-----Partie 2---------------
+
+1-Il est moins risqué car il comporte à la fois le chiffrement et l'authentification. De plus on a plus besoin de vecteurs
+d'initialisation, il est généré automatiquement empechant ainsi sa potentielle réutilisation. 
+2- C'est une attaque par réinjection, l'attaquant ici intercepte un message chiffré et le renvoie au serveur ou à un client
+pour tromper le système.
+3- Pour empecher ces attaques on a deux possibilités : 
+- Faire un nonce c'est à dire créer pour chaque message un nombre unique permettant au sérveur de vérifier si le message 
+n'a pas été réutilisé
+- Intégrer un horodatage, cette option quant à elle permet déterminer l'heure à laquelle le message a été émis permettant 
+au serveur de déterminer si le message est trop ancien ou non.
+
+
+-------Partie 3--------------
+
+1-La difference est l'ajout de l'heurodatage dans les messages rendant le cryptage plus robuste, fiable
+2-Lorsqu'on soustrait 45 secondes au temps de déchiffrement on a une erreur, ceci est dû à l'heurodatage, l'algorithme
+considère directement qu'il a expiré
+3- Oui cette solution est efficace contre une attaque par réinjection
+4-Dans la pratique on peut avoir des problèmes de synchronisation, si les deux systèmes ne sont pas à la meme horloge ça
+peut poser problème, ou encore la latence du réseau. 
